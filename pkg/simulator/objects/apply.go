@@ -205,15 +205,16 @@ func objectHousekeeping(obj *unstructured.Unstructured) error {
 	// Common housekeeping performed on all objects
 	// need to clear resource version before apply.
 	// this will be added as an annotation
-	annotations, ok, err := unstructured.NestedStringMap(obj.Object, "metadata", "annotations")
+	/*annotations, ok, err := unstructured.NestedStringMap(obj.Object, "metadata", "annotations")
 	if err != nil {
 		return err
 	}
 	if !ok {
 		annotations = make(map[string]string)
-	}
+	}*/
 
-	metadataMap, ok, err := unstructured.NestedMap(obj.Object, "metadata")
+	/*metadataMap, ok, err := unstructured.NestedMap(obj.Object, "metadata")
+
 	if err != nil {
 		return err
 	}
@@ -228,8 +229,8 @@ func objectHousekeeping(obj *unstructured.Unstructured) error {
 				return err
 			}
 		}
-	}
-
+	}*/
+	var err error
 	switch obj.GetKind() {
 	//case "Ingress":
 	// Ingress specific housekeeping
@@ -238,8 +239,8 @@ func objectHousekeeping(obj *unstructured.Unstructured) error {
 		err = jobCleanup(obj)
 	case "APIService":
 		err = apiServiceCleanup(obj)
-	case "Node":
-		err = nodeCleanup(obj)
+	//case "Node":
+	//	err = nodeCleanup(obj)
 	case "LoadBalancer":
 		err = loadBalancerCleanup(obj)
 	case "BlockDevice":
